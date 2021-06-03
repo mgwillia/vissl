@@ -99,3 +99,5 @@ website/pages/tutorials/*
 # Configs for local development
 configs/config_local/*
 train_config.yaml
+
+outfiles/
