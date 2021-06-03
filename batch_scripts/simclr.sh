@@ -14,4 +14,4 @@ module load cuda/10.1.243                                  # run any commands ne
 srun bash -c 'hostname; CUDA_VISIBLE_DEVICES=0,1,2,3 python ./tools/run_distributed_engines.py config=./pretrain/simclr/simclr_8node_resnet \
     config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
     config.DATA.TRAIN.DATA_PATHS=["/fs/vulcan-datasets/imagenet"] \
-    config.CHECKPOINT.DIR="./checkpoints"'
+    config.CHECKPOINT.DIR="./checkpoints" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=60'
