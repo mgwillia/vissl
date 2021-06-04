@@ -61,6 +61,8 @@ class SelfSupervisionFSDPTask(SelfSupervisionTask):
 
         # Then, wrap the whole model. We replace the base_model since it is used
         # when checkpoint is taken.
+        logging.info("Here!")
         fsdp_config = self.config["MODEL"]["FSDP_CONFIG"]
         self.base_model = fsdp_wrapper(self.base_model, **fsdp_config)
         self.distributed_model = self.base_model
+        logging.info("Model is:\n {}".format(self.model))
