@@ -156,6 +156,9 @@ class SelfSupervisionTrainer(object):
         4. At the end of epoch, sync meters and execute hooks at the end of phase. Involves
            things like checkpointing model, logging timers, logging to tensorboard etc
         """
+        if is_primary():
+            logging.info("Model is:\n {}".format(self.task.model))
+
         train_step_fn = get_train_step(self.cfg["TRAINER"]["TRAIN_STEP_NAME"])
         self.task.prepare(pin_memory=self.cfg.DATA.PIN_MEMORY)
         self.task.init_distributed_data_parallel_model()
