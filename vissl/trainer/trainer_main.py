@@ -160,12 +160,20 @@ class SelfSupervisionTrainer(object):
             logging.info("Model is:\n {}".format(self.task.model))
 
         train_step_fn = get_train_step(self.cfg["TRAINER"]["TRAIN_STEP_NAME"])
+        if is_primary():
+            logging.info("Model is:\n {}".format(self.task.model))
         self.task.prepare(pin_memory=self.cfg.DATA.PIN_MEMORY)
+        if is_primary():
+            logging.info("Model is:\n {}".format(self.task.model))
         self.task.init_distributed_data_parallel_model()
+        if is_primary():
+            logging.info("Model is:\n {}".format(self.task.model))
 
         # Find what phase, train_phase_idx, local_iteration_num we are starting from.
         # Recover it from the checkpoint (if available)
         task, phase_idx, iteration_num = self._init_training_state(self.cfg, self.task)
+        if is_primary():
+            logging.info("Model is:\n {}".format(task.model))
 
         # Good to go, (re) start training
         task.run_hooks(SSLClassyHookFunctions.on_start.name)
