@@ -27,6 +27,7 @@ from vissl.hooks import SSLClassyHookFunctions
 from vissl.models.model_helpers import get_trunk_output_feature_names
 from vissl.trainer.train_steps import get_train_step
 from vissl.utils.env import get_machine_local_and_dist_rank
+from vissl.utils.teacher import get_teacher
 
 
 def build_task(config):
@@ -159,17 +160,18 @@ class SelfSupervisionTrainer(object):
 
         train_step_fn = get_train_step(self.cfg["TRAINER"]["TRAIN_STEP_NAME"])
         self.task.prepare(pin_memory=self.cfg.DATA.PIN_MEMORY)
-        if is_primary():
-            logging.info("Model is:\n {}".format(self.task.model))
         self.task.init_distributed_data_parallel_model() ## THIS SETS self.task.model
-        if is_primary():
-            logging.info("Model is:\n {}".format(self.task.model))
+
+        self.task.teacher = torch.nn.parallel.DistributedDataParallel(
+            get_teacher(),
+            broadcast_buffers=True,
+            find_unused_parameters=True,
+            bucket_cap_mb=25,
+        )
 
         # Find what phase, train_phase_idx, local_iteration_num we are starting from.
         # Recover it from the checkpoint (if available)
         task, phase_idx, iteration_num = self._init_training_state(self.cfg, self.task)
-        if is_primary():
-            logging.info("Model is:\n {}".format(task.model))
 
         # Good to go, (re) start training
         task.run_hooks(SSLClassyHookFunctions.on_start.name)
