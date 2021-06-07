@@ -163,7 +163,7 @@ class SelfSupervisionTrainer(object):
         self.task.init_distributed_data_parallel_model() ## THIS SETS self.task.model
 
         self.task.teacher = torch.nn.parallel.DistributedDataParallel(
-            get_teacher(),
+            get_teacher().cuda(),
             broadcast_buffers=True,
             find_unused_parameters=True,
             bucket_cap_mb=25,
