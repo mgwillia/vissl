@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=sclr_inet                                # sets the job name
-#SBATCH --output=outfiles/sclr_inet.out.%j                            # indicates a file to redirect STDOUT to; %j is the jobid 
-#SBATCH --error=outfiles/sclr_inet.out.%j                             # indicates a file to redirect STDERR to; %j is the jobid
+#SBATCH --job-name=sclr_d_inet                                # sets the job name
+#SBATCH --output=outfiles/sclr_d_inet.out.%j                            # indicates a file to redirect STDOUT to; %j is the jobid 
+#SBATCH --error=outfiles/sclr_d_inet.out.%j                             # indicates a file to redirect STDERR to; %j is the jobid
 #SBATCH --time=36:00:00                                          # how long you think your job will take to complete; format=hh:mm:ss
 #SBATCH --qos=high
 #SBATCH --gres=gpu:p6000:4
