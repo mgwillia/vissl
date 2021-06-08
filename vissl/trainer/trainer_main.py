@@ -162,10 +162,12 @@ class SelfSupervisionTrainer(object):
         self.task.prepare(pin_memory=self.cfg.DATA.PIN_MEMORY)
         self.task.init_distributed_data_parallel_model() ## THIS SETS self.task.model
 
-        teacher = copy_model_to_gpu(get_teacher())
+        #teacher = copy_model_to_gpu(get_teacher())
+        teacher = get_teacher()
+        teacher.to(self.device)
         self.task.teacher = torch.nn.parallel.DistributedDataParallel(
             teacher,
-            device_ids=[1,0,2,3],
+            #device_ids=[0,1,2,3],
             broadcast_buffers=True,
             find_unused_parameters=True,
             bucket_cap_mb=25,
