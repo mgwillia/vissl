@@ -165,7 +165,7 @@ class SelfSupervisionTrainer(object):
         teacher = copy_model_to_gpu(get_teacher())
         self.task.teacher = torch.nn.parallel.DistributedDataParallel(
             teacher,
-            device_ids=[0,1,2,3],
+            device_ids=[1,0,2,3],
             broadcast_buffers=True,
             find_unused_parameters=True,
             bucket_cap_mb=25,
