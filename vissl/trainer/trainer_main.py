@@ -164,7 +164,7 @@ class SelfSupervisionTrainer(object):
 
         #teacher = copy_model_to_gpu(get_teacher())
         teacher = get_teacher()
-        teacher.to(self.device)
+        teacher.to(torch.device("cuda"))
         self.task.teacher = torch.nn.parallel.DistributedDataParallel(
             teacher,
             #device_ids=[0,1,2,3],
