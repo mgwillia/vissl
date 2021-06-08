@@ -17,6 +17,7 @@ from classy_vision.generic.distributed_util import (
     barrier,
     is_primary,
     set_cpu_device,
+    get_cuda_device_index,
     set_cuda_device_index,
 )
 from classy_vision.generic.util import copy_model_to_gpu
@@ -165,9 +166,11 @@ class SelfSupervisionTrainer(object):
         #teacher = copy_model_to_gpu(get_teacher())
         teacher = get_teacher()
         teacher.to(torch.device("cuda"))
+        logging.info("Cuda device index is: {}".format(get_cuda_device_index()))
         self.task.teacher = torch.nn.parallel.DistributedDataParallel(
             teacher,
-            #device_ids=[0,1,2,3],
+            device_ids=[get_cuda_device_index()],
+            output_device=get_cuda_device_index(),
             broadcast_buffers=True,
             find_unused_parameters=True,
             bucket_cap_mb=25,
