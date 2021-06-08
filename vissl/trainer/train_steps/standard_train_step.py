@@ -150,8 +150,7 @@ def distill_train_step(task):
             teacher_output = teacher_output[0]
 
         task.last_batch.sample = sample
-        task.last_batch.student_output = student_output
-        task.last_batch.teacher_output = teacher_output
+        task.last_batch.model_output = student_output
         target = sample["target"]
 
         # Run hooks on forward pass
@@ -182,8 +181,7 @@ def distill_train_step(task):
                 for meter in task.meters:
                     meter.update(student_output_cpu, target.detach().cpu())
 
-        task.last_batch.student_output = student_output
-        task.last_batch.teacher_output = teacher_output
+        task.last_batch.model_output = student_output
         task.last_batch.target = target
 
         # Update the iteration number, check loss is not NaN and measure batch time
