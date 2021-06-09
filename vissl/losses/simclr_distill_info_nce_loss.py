@@ -55,6 +55,8 @@ class SimclrDistillInfoNCELoss(ClassyLoss):
         return cls(loss_config)
 
     def forward(self, student_output, teacher_output, target):
+        logging.info(student_output)
+        logging.info(teacher_output)
         normalized_student_output = nn.functional.normalize(student_output, dim=1, p=2)
         normalized_teacher_output = nn.functional.normalize(teacher_output, dim=1, p=2)
         loss = self.info_criterion(normalized_student_output, normalized_teacher_output)
