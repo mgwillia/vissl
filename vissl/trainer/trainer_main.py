@@ -168,7 +168,10 @@ class SelfSupervisionTrainer(object):
         for param in teacher.parameters():
             param.requires_grad = False
         teacher.to(torch.device("cuda"))
-        logging.info("Cuda device index is: {}".format(get_cuda_device_index()))
+        self.task.teacher = torch.nn.DataParallel(teacher)
+        self.task.teacher.eval()
+        #logging.info("Cuda device index is: {}".format(get_cuda_device_index()))
+        """
         self.task.teacher = torch.nn.parallel.DistributedDataParallel(
             teacher,
             device_ids=[get_cuda_device_index()],
@@ -177,6 +180,7 @@ class SelfSupervisionTrainer(object):
             find_unused_parameters=True,
             bucket_cap_mb=25,
         )
+        """
 
         # Find what phase, train_phase_idx, local_iteration_num we are starting from.
         # Recover it from the checkpoint (if available)

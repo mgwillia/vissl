@@ -142,7 +142,8 @@ def distill_train_step(task):
                 # Manually sync params and buffers for DDP.
                 manual_sync_params(task.model)
             student_output = task.model(sample["input"])
-            teacher_output = task.teacher(sample["input"])
+            with torch.no_grad():
+                teacher_output = task.teacher(sample["input"])
 
         # If the model outputs only one tensor, we take it out of the list.
         if len(student_output) == 1:
