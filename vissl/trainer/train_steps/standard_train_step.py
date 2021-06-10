@@ -157,8 +157,8 @@ def distill_train_step(task):
         # Run hooks on forward pass
         task.run_hooks(SSLClassyHookFunctions.on_forward.name)
 
-        logging.info(student_output.shape)
-        logging.info(teacher_output.shape)
+        #logging.info(student_output.shape)
+        #logging.info(teacher_output.shape)
 
         # Compute loss
         with PerfTimer("loss_compute", perf_stats), record_function("loss_compute"):
@@ -306,7 +306,7 @@ def standard_train_step(task):
         # Run hooks on forward pass
         task.run_hooks(SSLClassyHookFunctions.on_forward.name)
 
-        logging.info(model_output.shape)
+        #logging.info(model_output.shape)
 
         # Compute loss
         with PerfTimer("loss_compute", perf_stats), record_function("loss_compute"):

@@ -55,11 +55,6 @@ class SimclrDistillInfoNCELoss(ClassyLoss):
         return cls(loss_config)
 
     def forward(self, student_output, teacher_output, target):
-        #logging.info(student_output)
-        logging.info(student_output.shape)
-        #logging.info(teacher_output)
-        #logging.info(len(teacher_output))
-        logging.info(teacher_output.shape)
         normalized_student_output = nn.functional.normalize(student_output, dim=1, p=2)
         normalized_teacher_output = nn.functional.normalize(teacher_output, dim=1, p=2)
         loss = self.info_criterion(normalized_student_output, normalized_teacher_output)
@@ -108,7 +103,7 @@ class SimclrDistillInfoNCECriterion(nn.Module):
         orig_images = batch_size // self.num_pos
         rank = self.dist_rank
 
-        logging.info(f'{total_images} {world_size} {batch_size} {orig_images} {rank}')
+        #logging.info(f'{total_images} {world_size} {batch_size} {orig_images} {rank}')
 
         pos_mask = torch.zeros(batch_size, total_images)
         neg_mask = torch.zeros(batch_size, total_images)
@@ -148,7 +143,7 @@ class SimclrDistillInfoNCECriterion(nn.Module):
         student_embeddings_buffer = self.gather_embeddings(student_embedding)
         teacher_embeddings_buffer = self.gather_embeddings(teacher_embedding)
 
-        logging.info(student_embeddings_buffer.shape)
+        #logging.info(student_embeddings_buffer.shape)
 
         # Step 2: matrix multiply: 64 x 128 with 4096 x 128 = 64 x 4096 and
         # divide by temperature.
@@ -156,8 +151,8 @@ class SimclrDistillInfoNCECriterion(nn.Module):
         teacher_similarity = torch.mm(teacher_embedding, teacher_embeddings_buffer.t()) / T
 
         similarity = torch.exp(student_similarity)
-        logging.info(similarity.shape)
-        logging.info(self.pos_mask.shape)
+        #logging.info(similarity.shape)
+        #logging.info(self.pos_mask.shape)
         pos = torch.sum(similarity * self.pos_mask, 1)
         neg = torch.sum(similarity * self.neg_mask, 1)
         loss = -(torch.mean(torch.log(pos / (pos + neg))))
