@@ -313,7 +313,7 @@ def infer_losses_config(cfg):
     total_num_crops = total_num_crops["total_num_crops"] if total_num_crops else None
 
     # some inference for the Info-NCE loss.
-    if "simclr_info_nce_loss" in cfg.LOSS.name or "simclr_distill_info_nce_loss":
+    if "simclr_info_nce_loss" in cfg.LOSS.name or "simclr_distill_info_nce_loss" in cfg.LOSS.name:
         cfg.LOSS[cfg.LOSS.name]["buffer_params"]["world_size"] = (
             cfg.DISTRIBUTED.NUM_NODES * cfg.DISTRIBUTED.NUM_PROC_PER_NODE
         )
