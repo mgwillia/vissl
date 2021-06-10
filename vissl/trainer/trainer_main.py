@@ -165,6 +165,8 @@ class SelfSupervisionTrainer(object):
 
         #teacher = copy_model_to_gpu(get_teacher())
         teacher = get_teacher()
+        for param in teacher.parameters():
+            param.requires_grad = False
         teacher.to(torch.device("cuda"))
         logging.info("Cuda device index is: {}".format(get_cuda_device_index()))
         self.task.teacher = torch.nn.parallel.DistributedDataParallel(

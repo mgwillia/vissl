@@ -6,6 +6,7 @@
 """
 This is the train step that"s most commonly used in most of the model trainings.
 """
+import logging
 
 import contextlib
 from types import SimpleNamespace
@@ -146,8 +147,7 @@ def distill_train_step(task):
         # If the model outputs only one tensor, we take it out of the list.
         if len(student_output) == 1:
             student_output = student_output[0]
-        if len(teacher_output) == 1:
-            teacher_output = teacher_output[0]
+        teacher_output = teacher_output[0]
 
         task.last_batch.sample = sample
         task.last_batch.model_output = student_output
@@ -155,6 +155,9 @@ def distill_train_step(task):
 
         # Run hooks on forward pass
         task.run_hooks(SSLClassyHookFunctions.on_forward.name)
+
+        logging.info(student_output.shape)
+        logging.info(teacher_output.shape)
 
         # Compute loss
         with PerfTimer("loss_compute", perf_stats), record_function("loss_compute"):
@@ -301,6 +304,8 @@ def standard_train_step(task):
 
         # Run hooks on forward pass
         task.run_hooks(SSLClassyHookFunctions.on_forward.name)
+
+        logging.info(model_output.shape)
 
         # Compute loss
         with PerfTimer("loss_compute", perf_stats), record_function("loss_compute"):
