@@ -138,9 +138,13 @@ class SimclrInfoNCECriterion(nn.Module):
         # Step 1: gather all the embeddings. Shape example: 4096 x 128
         embeddings_buffer = self.gather_embeddings(embedding)
 
+        logging.info(embeddings_buffer.shape)
+
         # Step 2: matrix multiply: 64 x 128 with 4096 x 128 = 64 x 4096 and
         # divide by temperature.
         similarity = torch.exp(torch.mm(embedding, embeddings_buffer.t()) / T)
+        logging.info(similarity.shape)
+        logging.info(self.pos_mask.shape)
         pos = torch.sum(similarity * self.pos_mask, 1)
         neg = torch.sum(similarity * self.neg_mask, 1)
         loss = -(torch.mean(torch.log(pos / (pos + neg))))

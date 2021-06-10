@@ -146,12 +146,16 @@ class SimclrDistillInfoNCECriterion(nn.Module):
         student_embeddings_buffer = self.gather_embeddings(student_embedding)
         teacher_embeddings_buffer = self.gather_embeddings(teacher_embedding)
 
+        logging.info(student_embeddings_buffer.shape)
+
         # Step 2: matrix multiply: 64 x 128 with 4096 x 128 = 64 x 4096 and
         # divide by temperature.
         student_similarity = torch.mm(student_embedding, student_embeddings_buffer.t()) / T
         teacher_similarity = torch.mm(teacher_embedding, teacher_embeddings_buffer.t()) / T
 
         similarity = torch.exp(student_similarity)
+        logging.info(similarity.shape)
+        logging.info(self.pos_mask.shape)
         pos = torch.sum(similarity * self.pos_mask, 1)
         neg = torch.sum(similarity * self.neg_mask, 1)
         loss = -(torch.mean(torch.log(pos / (pos + neg))))
