@@ -250,8 +250,6 @@ class SwAVDistillCriterion(nn.Module):
         assert scores.shape[0] % self.num_crops == 0
         bs = scores.shape[0] // self.num_crops
 
-        logging.info(scores.mean())
-        logging.info(teacher_embedding.mean())
         student_similarity = torch.mm(scores, scores.t())
         teacher_similarity = torch.mm(teacher_embedding, teacher_embedding.t())
 
