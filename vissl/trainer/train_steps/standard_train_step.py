@@ -143,11 +143,22 @@ def distill_train_step(task):
                 manual_sync_params(task.model)
             student_output = task.model(sample["input"])
             for out in student_output:
+                logging.info(out)
+                logging.info(len(out))
                 logging.info(out.shape)
             with torch.no_grad():
                 print(len(sample["input"]))
                 print(sample["input"][0].shape)
-                teacher_output = task.teacher(sample["input"])
+                feats = []
+                feat = task.teacher(torch.cat(sample["input"][:2]))
+                assert len(feat) == 1
+                feats.append(feat[0])
+                feat = task.teacher(torch.cat(sample["input"][2:]))
+                assert len(feat) == 1
+                feats.append(feat[0])
+                teacher_output = [torch.cat(feats)]
+                logging.info(teacher_output.shape)
+                #teacher_output = task.teacher(sample["input"])
 
         # If the model outputs only one tensor, we take it out of the list.
         if len(student_output) == 1:
