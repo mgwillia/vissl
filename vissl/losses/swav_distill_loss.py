@@ -91,7 +91,7 @@ class SwAVDistillLoss(ClassyLoss):
         )
         loss = 0
         for i, prototypes_scores in enumerate(student_output[1:]):
-            logging.info(i, prototypes_scores.shape)
+            logging.info(prototypes_scores.shape)
             loss += self.swav_criterion(prototypes_scores, i, teacher_output)
         loss /= len(student_output) - 1
         self.swav_criterion.num_iteration += 1
@@ -250,8 +250,8 @@ class SwAVDistillCriterion(nn.Module):
         assert scores.shape[0] % self.num_crops == 0
         bs = scores.shape[0] // self.num_crops
 
-        print(scores.mean(dim=1))
-        print(teacher_embedding.mean(dim=1))
+        logging.info(scores.mean())
+        logging.info(teacher_embedding.mean())
         student_similarity = torch.mm(scores, scores.t())
         teacher_similarity = torch.mm(teacher_embedding, teacher_embedding.t())
 
