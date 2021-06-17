@@ -129,7 +129,7 @@ config:
     BACKEND: nccl
     NUM_NODES: 8    # gives batch size of 20
     NUM_PROC_PER_NODE: 8
-    RUN_ID: xxxxxxxxxxxxxxxx
+    RUN_ID: auto
     INIT_METHOD: tcp
     NCCL_DEBUG: True
   MACHINE:
