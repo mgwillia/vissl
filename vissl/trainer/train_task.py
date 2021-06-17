@@ -477,6 +477,7 @@ class SelfSupervisionTask(ClassificationTask):
                 )
                 model.freeze_head_and_trunk()
 
+        print(self.checkpoint_path, self.config["MODEL"]["WEIGHTS_INIT"]["PARAMS_FILE"])
         # assert that if the user set the PARAMS_FILE, it must exist and be valid.
         if (
             self.checkpoint_path is None
