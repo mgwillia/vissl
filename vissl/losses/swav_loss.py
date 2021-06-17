@@ -90,6 +90,7 @@ class SwAVLoss(ClassyLoss):
         )
         loss = 0
         for i, prototypes_scores in enumerate(output[1:]):
+            logging.info(i, prototypes_scores.shape)
             loss += self.swav_criterion(prototypes_scores, i)
         loss /= len(output) - 1
         self.swav_criterion.num_iteration += 1
