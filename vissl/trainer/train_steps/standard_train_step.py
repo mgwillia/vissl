@@ -151,13 +151,11 @@ def distill_train_step(task):
                 print(sample["input"][0].shape)
                 feats = []
                 feat = task.teacher(torch.cat(sample["input"][:2]))
-                logging.info(len(feat))
                 logging.info(feat[0].shape)
-                feats.append(feat)
+                feats.append(feat[0])
                 feat = task.teacher(torch.cat(sample["input"][2:]))
-                logging.info(len(feat))
                 logging.info(feat[0].shape)
-                feats.append(feat)
+                feats.append(feat[0])
                 teacher_output = [torch.cat(feats)]
                 logging.info(teacher_output[0].shape)
                 #teacher_output = task.teacher(sample["input"])
