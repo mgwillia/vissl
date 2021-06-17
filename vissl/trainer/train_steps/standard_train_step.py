@@ -142,7 +142,7 @@ def distill_train_step(task):
                 # Manually sync params and buffers for DDP.
                 manual_sync_params(task.model)
             student_output = task.model(sample["input"])
-            print(student_output.shape)
+            logging.info(student_output.shape)
             with torch.no_grad():
                 print(len(sample["input"]))
                 print(sample["input"][0].shape)
