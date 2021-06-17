@@ -4,6 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import logging
+import traceback
 from enum import Enum
 from typing import List
 
@@ -166,6 +167,7 @@ class ResNeXt(nn.Module):
     def forward(
         self, x: torch.Tensor, out_feat_keys: List[str] = None
     ) -> List[torch.Tensor]:
+        logging.info(''.join(traceback.format_stack()))
         logging.info(x.shape)
         if isinstance(x, MultiDimensionalTensor):
             out = get_tunk_forward_interpolated_outputs(
