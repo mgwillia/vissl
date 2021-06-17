@@ -11,7 +11,7 @@ config:
       MONITOR_PERF_STATS: True
       ROLLING_BTIME_FREQ: 313
   DATA:
-    NUM_DATALOADER_WORKERS: 5
+    NUM_DATALOADER_WORKERS: 12
     TRAIN:
       DATA_SOURCES: [disk_folder]
       DATASET_NAMES: [imagenet1k_folder]

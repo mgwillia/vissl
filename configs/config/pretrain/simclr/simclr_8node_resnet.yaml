@@ -11,7 +11,7 @@ config:
       MONITOR_PERF_STATS: True
       ROLLING_BTIME_FREQ: 313
   DATA:
-    NUM_DATALOADER_WORKERS: 5
+    NUM_DATALOADER_WORKERS: 12
     TRAIN:
       DATA_SOURCES: [disk_folder]
       DATASET_NAMES: [imagenet1k_folder]
@@ -126,5 +126,5 @@ config:
     DEVICE: gpu
   CHECKPOINT:
     AUTO_RESUME: True
-    CHECKPOINT_FREQUENCY: 5
+    CHECKPOINT_FREQUENCY: 50
     CHECKPOINT_ITER_FREQUENCY: -1  # set this variable to checkpoint every few iterations
