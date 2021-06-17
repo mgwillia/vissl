@@ -886,6 +886,28 @@ config:
         local_queue_length: 0       # automatically inferred to queue_length // world_size
 
     # ----------------------------------------------------------------------------------- #
+    # SwAV LOSS (Specific to SwAV https://arxiv.org/abs/2006.09882)
+    # ----------------------------------------------------------------------------------- #
+    swav_distill_loss:
+      embedding_dim: 128            # automatically inferred from HEAD params
+      temperature: 0.1
+      distill_alpha: 10.0
+      use_double_precision: False
+      normalize_last_layer: True
+      num_iters: 3
+      epsilon: 0.05
+      num_crops: 2                  # automatically inferred from data transforms
+      crops_for_assign: [0, 1]
+      num_prototypes: [3000]        # automatically inferred from model HEAD settings
+      temp_hard_assignment_iters: 0
+      # for dumping the debugging info in case loss becomes NaN
+      output_dir: "."               # automatically inferred and set to checkpoint dir
+      queue:
+        queue_length: 0             # automatically adjusted to ensure queue_length % global batch size = 0
+        start_iter: 0
+        local_queue_length: 0       # automatically inferred to queue_length // world_size
+
+    # ----------------------------------------------------------------------------------- #
     # SwAV MOMENTUM LOSS
     # ----------------------------------------------------------------------------------- #
     swav_momentum_loss:
