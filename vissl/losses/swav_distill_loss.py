@@ -91,7 +91,6 @@ class SwAVDistillLoss(ClassyLoss):
         )
         loss = 0
         for i, prototypes_scores in enumerate(student_output[1:]):
-            logging.info(prototypes_scores.shape)
             loss += self.swav_criterion(prototypes_scores, i, teacher_output)
         loss /= len(student_output) - 1
         self.swav_criterion.num_iteration += 1
@@ -250,8 +249,8 @@ class SwAVDistillCriterion(nn.Module):
         assert scores.shape[0] % self.num_crops == 0
         bs = scores.shape[0] // self.num_crops
 
-        student_similarity = torch.mm(scores, scores.t())
-        teacher_similarity = torch.mm(teacher_embedding, teacher_embedding.t())
+        student_similarity = torch.mm(scores, scores.t()) / self.temperature
+        teacher_similarity = torch.mm(teacher_embedding, teacher_embedding.t()) / self.temperature
 
         soft_student_similarities = torch.nn.functional.log_softmax(student_similarity, dim=1)
         soft_teacher_similarities = torch.nn.functional.softmax(teacher_similarity, dim=1)
@@ -380,6 +379,7 @@ class SwAVDistillCriterion(nn.Module):
             "name": self._get_name(),
             "use_queue": self.use_queue,
             "local_queue_length": self.local_queue_length,
+            "distill_alpha": self.distill_alpha,
             "temperature": self.temperature,
             "num_prototypes": self.num_prototypes,
             "num_crops": self.num_crops,

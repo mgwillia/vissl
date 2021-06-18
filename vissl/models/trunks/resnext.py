@@ -167,7 +167,6 @@ class ResNeXt(nn.Module):
     def forward(
         self, x: torch.Tensor, out_feat_keys: List[str] = None
     ) -> List[torch.Tensor]:
-        logging.info(x.shape)
         if isinstance(x, MultiDimensionalTensor):
             out = get_tunk_forward_interpolated_outputs(
                 input_type=self.model_config.INPUT_TYPE,
