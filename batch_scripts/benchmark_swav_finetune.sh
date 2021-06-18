@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=swav_f_inet                                # sets the job name
-#SBATCH --output=outfiles/swav_f_inet.out.%j                            # indicates a file to redirect STDOUT to; %j is the jobid 
-#SBATCH --error=outfiles/swav_f_inet.out.%j                             # indicates a file to redirect STDERR to; %j is the jobid
+#SBATCH --job-name=b_swav_f_inet                                # sets the job name
+#SBATCH --output=outfiles/b_swav_f_inet.out.%j                            # indicates a file to redirect STDOUT to; %j is the jobid 
+#SBATCH --error=outfiles/b_swav_f_inet.out.%j                             # indicates a file to redirect STDERR to; %j is the jobid
 #SBATCH --time=72:00:00                                          # how long you think your job will take to complete; format=hh:mm:ss
 #SBATCH --partition=scavenger
 #SBATCH --account=scavenger
