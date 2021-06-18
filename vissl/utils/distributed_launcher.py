@@ -124,6 +124,7 @@ def launch_distributed(
     # given training. This ensures that if the same training resumes, then it
     # resumes from the checkpoint and not the weight init
     if checkpoint_path is None and cfg["MODEL"]["WEIGHTS_INIT"]["PARAMS_FILE"]:
+        logging.info(cfg["MODEL"]["WEIGHTS_INIT"]["PARAMS_FILE"])
         assert PathManager.exists(
             cfg["MODEL"]["WEIGHTS_INIT"]["PARAMS_FILE"]
         ), "Specified PARAMS_FILE does NOT exist"

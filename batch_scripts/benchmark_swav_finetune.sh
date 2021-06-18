@@ -18,7 +18,7 @@ srun bash -c 'hostname; CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python ./tools/run_
                 config.MODEL.WEIGHTS_INIT.APPEND_PREFIX=trunk.base_model._feature_blocks. \
                 config.MODEL.WEIGHTS_INIT.REMOVE_PREFIX=module. \
                 config.MODEL.WEIGHTS_INIT.STATE_DICT_KEY_NAME="" \
-                config.MODEL.WEIGHTS_INIT.PARAMS_FILE=./checkpoints_swav/checkpoint.torch \
+                config.MODEL.WEIGHTS_INIT.PARAMS_FILE=checkpoints_swav/checkpoint.torch \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=8 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/fs/vulcan-datasets/imagenet"] \
                 config.DATA.TEST.DATA_PATHS=["/fs/vulcan-datasets/imagenet"] \
