@@ -18,8 +18,8 @@ srun bash -c 'hostname; CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python ./tools/run_
                 config.MODEL.WEIGHTS_INIT.APPEND_PREFIX=trunk.base_model._feature_blocks. \
                 config.MODEL.WEIGHTS_INIT.REMOVE_PREFIX=module. \
                 config.MODEL.WEIGHTS_INIT.STATE_DICT_KEY_NAME="" \
-                config.MODEL.WEIGHTS_INIT.PARAMS_FILE=checkpoints_swav/model_phase0.torch \
+                config.MODEL.WEIGHTS_INIT.PARAMS_FILE=checkpoints_swav/model_final_checkpoint_phase9.torch \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=8 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/fs/vulcan-datasets/imagenet/train"] \
                 config.DATA.TEST.DATA_PATHS=["/fs/vulcan-datasets/imagenet/test"] \
-                config.CHECKPOINT.DIR="./checkpoints_bench_swav" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=32'
+                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_swav" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=32'
