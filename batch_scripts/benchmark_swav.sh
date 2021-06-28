@@ -15,9 +15,6 @@ module load cuda/10.1.243                                  # run any commands ne
 srun bash -c 'hostname; CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python ./tools/run_distributed_engines.py \
                 config=benchmark/linear_image_classification/imagenet1k/eval_resnet_8gpu_transfer_in1k_linear \
                 config.MODEL.TRUNK.RESNETS.DEPTH=50 \
-                config.MODEL.WEIGHTS_INIT.APPEND_PREFIX=trunk.base_model._feature_blocks. \
-                config.MODEL.WEIGHTS_INIT.REMOVE_PREFIX=module. \
-                config.MODEL.WEIGHTS_INIT.STATE_DICT_KEY_NAME="" \
                 config.MODEL.WEIGHTS_INIT.PARAMS_FILE=swav_pretrained.torch \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=8 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/fs/vulcan-datasets/imagenet/train"] \
