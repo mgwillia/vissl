@@ -217,6 +217,7 @@ class GenericSSLDataset(VisslDatasetBase):
         In case of disk_folder, we use the ImageFolder object created during the
         data loading itself.
         """
+        logging.info(f"Attempting to load labels from sources: {self.label_sources}")
         local_rank, _ = get_machine_local_and_dist_rank()
         for idx, label_source in enumerate(self.label_sources):
             if label_source == "disk_filelist":
@@ -312,6 +313,7 @@ class GenericSSLDataset(VisslDatasetBase):
         The final transformed sample is returned to be added into the minibatch.
         """
 
+        logging.info(f"Attempting get item, labels_int: {self._labels_init}, label_sources: {self.label_sources}")
         if not self._labels_init and len(self.label_sources) > 0:
             self._load_labels()
             self._labels_init = True
