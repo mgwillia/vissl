@@ -249,12 +249,15 @@ class SwAVDistillCriterion(nn.Module):
         assert scores.shape[0] % self.num_crops == 0
         bs = scores.shape[0] // self.num_crops
 
+        print(scores.shape)
+        print(teacher_embedding.shape)
         student_similarity = torch.mm(scores, scores.t()) / self.temperature
         teacher_similarity = torch.mm(teacher_embedding, teacher_embedding.t()) / self.temperature
 
         soft_student_similarities = torch.nn.functional.log_softmax(student_similarity, dim=1)
         soft_teacher_similarities = torch.nn.functional.softmax(teacher_similarity, dim=1)
         distill_loss = torch.nn.functional.kl_div(soft_student_similarities, soft_teacher_similarities, reduction='batchmean')
+        print(distill_loss)
 
         total_loss = 0
         n_term_loss = 0
