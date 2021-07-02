@@ -28,8 +28,8 @@
         "val": ["<img_path>", "<lbl_path>"]
     },
     "CIFAR10": {
-        "train": ["/fs/vulcan-datasets/cifar-10-python/", "<unused>"],
-        "val": ["/fs/vulcan-datasets/cifar-10-python/", "<unused>"]
+        "train": ["/vulcanscratch/mgwillia/cifar-10", "<unused>"],
+        "val": ["/vulcanscratch/mgwillia/cifar-10", "<unused>"]
     },
     "CIFAR100": {
         "train": ["<path_to_pytorch_dataset>", "<unused>"],
