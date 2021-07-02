@@ -51,7 +51,8 @@ class TorchvisionDataset(Dataset):
     def _load_dataset(self):
         is_train_split = self.split == "train"
         if self.dataset_name == TorchvisionDatasetName.CIFAR10:
-            return CIFAR10(self.path, train=is_train_split)
+            print(self.path, is_train_split)
+            return CIFAR10(self.path, train=is_train_split, download=True)
         elif self.dataset_name == TorchvisionDatasetName.CIFAR100:
             return CIFAR100(self.path, train=is_train_split)
         elif self.dataset_name == TorchvisionDatasetName.STL10:
