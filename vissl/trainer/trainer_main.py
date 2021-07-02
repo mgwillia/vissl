@@ -163,7 +163,7 @@ class SelfSupervisionTrainer(object):
         self.task.prepare(pin_memory=self.cfg.DATA.PIN_MEMORY)
         self.task.init_distributed_data_parallel_model() ## THIS SETS self.task.model
 
-        #teacher = copy_model_to_gpu(get_teacher())
+        """
         teacher = get_teacher()
         for param in teacher.parameters():
             param.requires_grad = False
@@ -171,7 +171,8 @@ class SelfSupervisionTrainer(object):
         self.task.teacher = torch.nn.DataParallel(teacher, device_ids=[get_cuda_device_index()],
             output_device=get_cuda_device_index())
         self.task.teacher.eval()
-        #logging.info("Cuda device index is: {}".format(get_cuda_device_index()))
+        """
+
         """
         self.task.teacher = torch.nn.parallel.DistributedDataParallel(
             teacher,
