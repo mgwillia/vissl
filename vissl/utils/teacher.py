@@ -197,9 +197,13 @@ class ClusteringModel(nn.Module):
 
 def get_teacher():
     backbone = resnet50x1()
-    teacher = ClusteringModel(backbone, 1000, 10)
 
-    state_dict = torch.load('/cfarhomes/mgwillia/scan-adaptation/Unsupervised-Classification/imagenet_model.pth.tar')
+    #teacher = ClusteringModel(backbone, 1000, 10)
+    #state_dict = torch.load('/cfarhomes/mgwillia/scan-adaptation/Unsupervised-Classification/imagenet_model.pth.tar')
+
+    teacher = ClusteringModel(backbone, 10, 1)
+    state_dict = torch.load('/vulcanscratch/mgwillia/unsupervised-classification/cifar-10/selflabel/model.pth.tar')
+
     teacher.load_state_dict(state_dict['model'])
 
     return teacher
