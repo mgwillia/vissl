@@ -173,17 +173,6 @@ class SelfSupervisionTrainer(object):
         self.task.teacher.eval()
         """
 
-        """
-        self.task.teacher = torch.nn.parallel.DistributedDataParallel(
-            teacher,
-            device_ids=[get_cuda_device_index()],
-            output_device=get_cuda_device_index(),
-            broadcast_buffers=True,
-            find_unused_parameters=True,
-            bucket_cap_mb=25,
-        )
-        """
-
         # Find what phase, train_phase_idx, local_iteration_num we are starting from.
         # Recover it from the checkpoint (if available)
         task, phase_idx, iteration_num = self._init_training_state(self.cfg, self.task)

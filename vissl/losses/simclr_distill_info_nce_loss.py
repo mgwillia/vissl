@@ -56,8 +56,8 @@ class SimclrDistillInfoNCELoss(ClassyLoss):
 
     def forward(self, student_output, teacher_output, target):
         normalized_student_output = nn.functional.normalize(student_output, dim=1, p=2)
-        normalized_teacher_output = nn.functional.normalize(teacher_output, dim=1, p=2)
-        loss = self.info_criterion(normalized_student_output, normalized_teacher_output)
+        #normalized_teacher_output = nn.functional.normalize(teacher_output, dim=1, p=2)
+        loss = self.info_criterion(normalized_student_output, teacher_output)
         return loss
 
     def __repr__(self):
@@ -103,7 +103,7 @@ class SimclrDistillInfoNCECriterion(nn.Module):
         orig_images = batch_size // self.num_pos
         rank = self.dist_rank
 
-        #logging.info(f'{total_images} {world_size} {batch_size} {orig_images} {rank}')
+        logging.info(f'{total_images} {world_size} {batch_size} {orig_images} {rank}')
 
         pos_mask = torch.zeros(batch_size, total_images)
         neg_mask = torch.zeros(batch_size, total_images)
