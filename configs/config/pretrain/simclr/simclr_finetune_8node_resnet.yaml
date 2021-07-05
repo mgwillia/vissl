@@ -127,5 +127,5 @@ config:
     DEVICE: gpu
   CHECKPOINT:
     AUTO_RESUME: True
-    CHECKPOINT_FREQUENCY: 50
+    CHECKPOINT_FREQUENCY: 1
     CHECKPOINT_ITER_FREQUENCY: -1  # set this variable to checkpoint every few iterations
