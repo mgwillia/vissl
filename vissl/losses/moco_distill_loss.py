@@ -70,6 +70,7 @@ class MoCoDistillLoss(ClassyLoss):
         self.initialized = False
 
         self.key = None
+        self.teacher_key = None
         self.sample = None
         self.moco_encoder = None
 
@@ -163,6 +164,10 @@ class MoCoDistillLoss(ClassyLoss):
         # Einstein sum is used in MoCo, deemed more intuitive.
         # Another option is `torch.diag(torch.matmul(query, self.key.T))`
 
+        logging.info(query.shape) ## (replica_batch_size, MLP_feature_dim) e.g. (32, 128)
+        logging.info(self.key.shape) ## e.g. (32, 128)
+        logging.info(self.queue.shape) ## e.g. (128, 65536)
+
         # positive logits: Nx1
         l_pos = torch.einsum("nc,nc->n", [query, self.key]).unsqueeze(-1)
 
@@ -175,12 +180,11 @@ class MoCoDistillLoss(ClassyLoss):
         # apply temperature
         logits /= self.loss_config.temperature
 
-        logging.info(query.shape) ## (replica_batch_size, MLP_feature_dim) e.g. (32, 128)
         logging.info(teacher_query.shape) ## (replica_batch_size, num_teacher_clusters) e.g. (32, 1000)
-        logging.info(self.key.shape) ## e.g. (32, 128)
-        logging.info(self.queue.shape) ## e.g. (128, 65536)
-        teacher_pos_logits = torch.einsum("nc,nc->n", [teacher_query, self.key]).unsqueeze(-1)
-        teacher_neg_logits = torch.einsum("nc,ck->nk", [teacher_query, self.queue.clone().detach()])
+        logging.info(self.teacher_key.shape) ## e.g. (32, 128)
+        logging.info(self.teacher_queue.shape) ## e.g. (128, 65536)
+        teacher_pos_logits = torch.einsum("nc,nc->n", [teacher_query, self.teacher_key]).unsqueeze(-1)
+        teacher_neg_logits = torch.einsum("nc,ck->nk", [teacher_query, self.teacher_queue.clone().detach()])
         teacher_logits = torch.cat([teacher_pos_logits, teacher_neg_logits], dim=1)
         teacher_logits /= self.loss_config.temperature
 
@@ -190,7 +194,7 @@ class MoCoDistillLoss(ClassyLoss):
 
         # ---
         # Update the queue for the next time
-        self._dequeue_and_enqueue(self.key)
+        self._dequeue_and_enqueue(self.key, self.teacher_key)
 
         soft_student_similarities = torch.nn.functional.log_softmax(logits, dim=1)
         soft_teacher_similarities = torch.nn.functional.softmax(teacher_logits, dim=1)
