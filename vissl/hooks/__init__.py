@@ -101,11 +101,11 @@ def default_hook_generator(cfg: AttrDict) -> List[ClassyHook]:
         hooks.append(DINOHook())
     if cfg.LOSS.name == "deepclusterv2_loss":
         hooks.extend([InitMemoryHook(), ClusterMemoryHook()])
-    if cfg.LOSS.name == "moco_loss":
+    if cfg.LOSS.name == "moco_loss" or cfg.LOSS.name == "moco_distill_loss":
         hooks.extend(
             [
                 MoCoHook(
-                    cfg.LOSS["moco_loss"]["momentum"],
+                    cfg.LOSS[cfg.LOSS.name]["momentum"],
                     shuffle_batch=(not cfg.MODEL.SYNC_BN_CONFIG.CONVERT_BN_TO_SYNC_BN),
                 )
             ]

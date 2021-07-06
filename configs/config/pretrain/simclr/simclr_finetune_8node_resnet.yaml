@@ -63,7 +63,7 @@ config:
       AMP_ARGS: {"opt_level": "O1"}
   LOSS:
       name: simclr_distill_info_nce_loss
-      simclr_info_nce_loss:
+      simclr_distill_info_nce_loss:
         temperature: 0.1
         distill_alpha: 10.0
         buffer_params:
