@@ -77,7 +77,7 @@ config:
       weight_decay: 0.0001
       momentum: 0.9
       nesterov: True
-      num_epochs: 10
+      num_epochs: 11
       regularize_bn: True
       regularize_bias: True
       param_schedulers:
