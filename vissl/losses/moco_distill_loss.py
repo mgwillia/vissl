@@ -144,9 +144,13 @@ class MoCoDistillLoss(ClassyLoss):
         # apply temperature
         logits /= self.loss_config.temperature
 
-        teacher_logits = torch.einsum("nc,nc->n", [teacher_query, self.key]).unsqueeze(-1)
-        teacher_logits = torch.einsum("nc,ck->nk", [teacher_query, self.queue.clone().detach()])
-        teacher_logits = torch.cat([l_pos, l_neg], dim=1)
+        logging.info(query.shape)
+        logging.info(teacher_query.shape)
+        logging.info(self.key.shape)
+        logging.info(self.queue.shape)
+        teacher_pos_logits = torch.einsum("nc,nc->n", [teacher_query, self.key]).unsqueeze(-1)
+        teacher_neg_logits = torch.einsum("nc,ck->nk", [teacher_query, self.queue.clone().detach()])
+        teacher_logits = torch.cat([teacher_pos_logits, teacher_neg_logits], dim=1)
         teacher_logits /= self.loss_config.temperature
 
         # labels: positives are the first rank.
