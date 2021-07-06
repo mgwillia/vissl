@@ -15,7 +15,7 @@ module load cuda/10.1.243
 #srun bash -c "mkdir -p /scratch0/mgwillia"
 #srun bash -c "rsync -r /fs/vulcan-datasets/imagenet /scratch0/mgwillia/"
 
-srun bash -c 'hostname; CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python ./tools/run_distributed_engines.py config=./pretrain/simclr/moco_finetune_1node_resnet \
+srun bash -c 'hostname; CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python ./tools/run_distributed_engines.py config=./pretrain/moco/moco_finetune_1node_resnet \
     config.DISTRIBUTED.NUM_PROC_PER_NODE=8 config.DISTRIBUTED.NUM_NODES=1 \
     config.DATA.TRAIN.DATA_PATHS=["/fs/vulcan-datasets/imagenet"] \
     config.MODEL.WEIGHTS_INIT.PARAMS_FILE="/vulcanscratch/mgwillia/unsupervised-classification/backbones/moco_r50_200.torch" \
