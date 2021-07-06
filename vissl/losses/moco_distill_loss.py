@@ -56,6 +56,16 @@ class MoCoDistillLoss(ClassyLoss):
         self.queue = nn.functional.normalize(self.queue, dim=0)
 
         self.register_buffer("queue_ptr", torch.zeros(1, dtype=torch.long))
+
+        # Create the queue
+        self.register_buffer(
+            "teacher_queue",
+            torch.randn(1000, self.loss_config.queue_size),
+        )
+        self.teacher_queue = nn.functional.normalize(self.teacher_queue, dim=0)
+
+        self.register_buffer("teacher_queue_ptr", torch.zeros(1, dtype=torch.long))
+
         self.criterion = nn.CrossEntropyLoss()
         self.initialized = False
 
@@ -79,7 +89,7 @@ class MoCoDistillLoss(ClassyLoss):
         return cls(config)
 
     @torch.no_grad()
-    def _dequeue_and_enqueue(self, key: torch.Tensor):
+    def _dequeue_and_enqueue(self, key: torch.Tensor, teacher_key: torch.Tensor):
         """
         Discard the oldest key from the MoCo queue, save the newest one,
         through a round-robin mechanism
@@ -105,6 +115,27 @@ class MoCoDistillLoss(ClassyLoss):
         ) % self.loss_config.queue_size  # move pointer, round robin
 
         self.queue_ptr[0] = ptr
+
+        # gather keys before updating queue /!\ the queue is duplicated on all GPUs
+        teacher_keys = concat_all_gather(teacher_key)
+        batch_size = teacher_keys.shape[0]
+
+        # for simplicity, removes the case where the batch overlaps with the end
+        # of the queue
+        assert self.loss_config.queue_size % batch_size == 0, (
+            f"The queue size needs to be a multiple of the batch size. "
+            f"Effective batch size: {batch_size}. Queue size:"
+            f" {self.loss_config.queue_size}."
+        )
+
+        # replace the keys at ptr (dequeue and enqueue)
+        teacher_ptr = int(self.teacher_queue_ptr)
+        self.teacher_queue[:, teacher_ptr : teacher_ptr + batch_size] = teacher_keys.T
+        teacher_ptr = (
+            teacher_ptr + batch_size
+        ) % self.loss_config.queue_size  # move pointer, round robin
+
+        self.teacher_queue_ptr[0] = teacher_ptr
 
     def forward(self, query: torch.Tensor, teacher_query: torch.Tensor, *args, **kwargs) -> torch.Tensor:
         """
@@ -144,10 +175,10 @@ class MoCoDistillLoss(ClassyLoss):
         # apply temperature
         logits /= self.loss_config.temperature
 
-        logging.info(query.shape)
-        logging.info(teacher_query.shape)
-        logging.info(self.key.shape)
-        logging.info(self.queue.shape)
+        logging.info(query.shape) ## (replica_batch_size, MLP_feature_dim) e.g. (32, 128)
+        logging.info(teacher_query.shape) ## (replica_batch_size, num_teacher_clusters) e.g. (32, 1000)
+        logging.info(self.key.shape) ## e.g. (32, 128)
+        logging.info(self.queue.shape) ## e.g. (128, 65536)
         teacher_pos_logits = torch.einsum("nc,nc->n", [teacher_query, self.key]).unsqueeze(-1)
         teacher_neg_logits = torch.einsum("nc,ck->nk", [teacher_query, self.queue.clone().detach()])
         teacher_logits = torch.cat([teacher_pos_logits, teacher_neg_logits], dim=1)

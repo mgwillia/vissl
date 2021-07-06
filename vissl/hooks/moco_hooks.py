@@ -164,10 +164,17 @@ class MoCoHook(ClassyHook):
             im_k, idx_unshuffle = self._batch_shuffle_ddp(im_k, task)
 
         k = task.loss.moco_encoder(im_k)[0]
+        logging.info(k.shape)
         k = torch.nn.functional.normalize(k, dim=1)
+
+        teacher_k = task.teacher(im_k)[0]
+        logging.info(teacher_k.shape)
+        teacher_k = torch.nn.functional.normalize(teacher_k, dim=1)
 
         if self.is_distributed and self.shuffle_batch:
             # undo shuffle
             k = self._batch_unshuffle_ddp(k, idx_unshuffle)
+            teacher_k = self._batch_unshuffle_ddp(teacher_k, idx_unshuffle)
 
         task.loss.key = k
+        task.loss.teacher_key = teacher_k
