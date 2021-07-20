@@ -10,7 +10,7 @@ config:
     PERF_STATS:
       MONITOR_PERF_STATS: False
   DATA:
-    NUM_DATALOADER_WORKERS: 5
+    NUM_DATALOADER_WORKERS: 8
     TRAIN:
       DATA_SOURCES: [disk_folder]
       DATASET_NAMES: [imagenet1k_folder]
@@ -93,4 +93,4 @@ config:
   CHECKPOINT:
     DIR: "."
     AUTO_RESUME: True
-    CHECKPOINT_FREQUENCY: 1
+    CHECKPOINT_FREQUENCY: 5
