@@ -25,12 +25,10 @@ class ImgPilPairAugment(ClassyTransform):
 
     def __init__(
         self,
-        crop_size: int,
         color_distortion_strength: float,
         p_gaussian_blur: float,
         gaussian_radius_min: float,
-        gaussian_radius_max: float,
-        p_horizontal_flip: float
+        gaussian_radius_max: float
     ):
 
         self.p_gaussian_blur = p_gaussian_blur
