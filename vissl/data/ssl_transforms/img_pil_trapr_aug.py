@@ -53,13 +53,13 @@ class ImgPilPairAugment(ClassyTransform):
 
             for fn_id in fn_idx:
                 if fn_id == 0:
-                    image = torchvision.transforms.functional.adjust_brightness(image, brightness_factor)
+                    image = pth_transforms.functional.adjust_brightness(image, brightness_factor)
                 elif fn_id == 1:
-                    image = torchvision.transforms.functional.adjust_contrast(image, contrast_factor)
+                    image = pth_transforms.functional.adjust_contrast(image, contrast_factor)
                 elif fn_id == 2:
-                    image = torchvision.transforms.functional.adjust_saturation(image, saturation_factor)
+                    image = pth_transforms.functional.adjust_saturation(image, saturation_factor)
                 elif fn_id == 3:
-                    image = torchvision.transforms.functional.adjust_hue(image, hue_factor)
+                    image = pth_transforms.functional.adjust_hue(image, hue_factor)
 
         should_grayscale = np.random.rand() <= 0.2
         grayscale = 0.0
