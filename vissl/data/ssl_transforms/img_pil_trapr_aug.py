@@ -16,6 +16,7 @@ from PIL import Image
 import torch.nn.functional as F
 import torch
 
+import logging
 
 @register_transform("ImgPilTraPrAugment")
 class ImgPilPairAugment(ClassyTransform):
@@ -37,6 +38,8 @@ class ImgPilPairAugment(ClassyTransform):
         self.strength = color_distortion_strength
 
     def __call__(self, image: Image.Image) -> List:
+
+        logging.info(type(image))
 
         should_color_jitter = np.random.rand() <= 0.8
         fn_idx, brightness_factor, contrast_factor, saturation_factor, hue_factor = \
@@ -61,21 +64,25 @@ class ImgPilPairAugment(ClassyTransform):
                 elif fn_id == 3:
                     image = pth_transforms.functional.adjust_hue(image, hue_factor)
 
+        logging.info(type(image))
+
         should_grayscale = np.random.rand() <= 0.2
         grayscale = 0.0
         if should_grayscale:
             grayscale = 1.0
             image = pth_transforms.RandomGrayscale(p=1.0)(image)
 
+        logging.info(type(image))
+
         should_blur = np.random.rand() <= self.p_gaussian_blur
         gaussian_radius = 0.0
         if should_blur:
             gaussian_radius = random.uniform(self.gaussian_radius_min, self.gaussian_radius_max)
             image = image.filter(
-            GaussianBlur(
-                radius=gaussian_radius
+                GaussianBlur(
+                    radius=gaussian_radius
+                )
             )
-        )
 
         transforms = torch.Tensor([
             fn_idx[0] + 1.0, brightness_factor,
