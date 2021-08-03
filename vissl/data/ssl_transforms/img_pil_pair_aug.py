@@ -113,7 +113,7 @@ class ImgPilPairAugment(ClassyTransform):
             gaussian_radius
         ])
 
-        return [root_image, augmented_image, transforms]
+        return root_image, augmented_image, transforms
 
     @classmethod
     def from_config(cls, config: Dict[str, Any]) -> "ImgPilPairAugment":
