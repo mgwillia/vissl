@@ -164,6 +164,8 @@ class SelfSupervisionTrainer(object):
         self.task.init_distributed_data_parallel_model() ## THIS SETS self.task.model
 
         logging.info(self.task.model)
+        logging.info(self.task.model.trunk)
+        logging.info(self.task.model.heads)
 
         teacher = get_teacher()
         for param in teacher.parameters():
