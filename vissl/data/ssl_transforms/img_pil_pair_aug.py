@@ -10,6 +10,7 @@ import random
 import numpy as np
 import torchvision.transforms as pth_transforms
 from torchvision.transforms.functional import gaussian_blur
+from torchvision.transforms.transforms import ToTensor
 from classy_vision.dataset.transforms import register_transform
 from classy_vision.dataset.transforms.classy_transform import ClassyTransform
 from PIL import Image
@@ -51,11 +52,10 @@ class ImgPilPairAugment(ClassyTransform):
             pth_transforms.RandomHorizontalFlip(p_horizontal_flip)
         ])
 
-        #self.strong_transform = pth_transforms.Compose([
-        #    pth_transforms.RandomApply([self.color_jitter], p=0.8),
-        #    pth_transforms.RandomGrayscale(p=0.2),
-        #    pth_transforms.Lambda(gaussian_blur)
-        #])
+        self.to_tensor = pth_transforms.Compose([
+            pth_transforms.ToTensor(),
+            pth_transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        ])
 
     def __call__(self, image: Image.Image) -> List:
         root_image = self.weak_transform(image)
@@ -77,13 +77,13 @@ class ImgPilPairAugment(ClassyTransform):
 
             for fn_id in fn_idx:
                 if fn_id == 0:
-                    augmented_image = F.adjust_brightness(augmented_image, brightness_factor)
+                    augmented_image = pth_transforms.functional.adjust_brightness(augmented_image, brightness_factor)
                 elif fn_id == 1:
-                    augmented_image = F.adjust_contrast(augmented_image, contrast_factor)
+                    augmented_image = pth_transforms.functional.adjust_contrast(augmented_image, contrast_factor)
                 elif fn_id == 2:
-                    augmented_image = F.adjust_saturation(augmented_image, saturation_factor)
+                    augmented_image = pth_transforms.functional.adjust_saturation(augmented_image, saturation_factor)
                 elif fn_id == 3:
-                    augmented_image = F.adjust_hue(augmented_image, hue_factor)
+                    augmented_image = pth_transforms.functional.adjust_hue(augmented_image, hue_factor)
 
         should_grayscale = np.random.rand() <= 0.2
         grayscale = 0.0
@@ -100,6 +100,9 @@ class ImgPilPairAugment(ClassyTransform):
                 radius=gaussian_radius
             )
         )
+
+        root_image = self.to_tensor(root_image)
+        augmented_image = self.to_tensor(augmented_image)
 
         transforms = torch.Tensor([
             fn_idx[0] + 1.0, brightness_factor,

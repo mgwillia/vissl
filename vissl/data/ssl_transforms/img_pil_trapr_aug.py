@@ -37,6 +37,11 @@ class ImgPilPairAugment(ClassyTransform):
         self.gaussian_radius_max = gaussian_radius_max
         self.strength = color_distortion_strength
 
+        self.to_tensor = pth_transforms.Compose([
+            pth_transforms.ToTensor(),
+            pth_transforms.Normalize([0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        ])
+
     def __call__(self, image: Image.Image) -> List:
 
         logging.info(type(image))
@@ -93,7 +98,7 @@ class ImgPilPairAugment(ClassyTransform):
             gaussian_radius
         ])
 
-        return image, transforms
+        return self.to_tensor(image), transforms
 
     @classmethod
     def from_config(cls, config: Dict[str, Any]) -> "ImgPilPairAugment":
