@@ -44,7 +44,7 @@ class ImgPilPairAugment(ClassyTransform):
 
     def __call__(self, image: Image.Image) -> List:
 
-        logging.info(type(image))
+        #logging.info(type(image))
 
         should_color_jitter = np.random.rand() <= 0.8
         fn_idx, brightness_factor, contrast_factor, saturation_factor, hue_factor = \
@@ -69,7 +69,7 @@ class ImgPilPairAugment(ClassyTransform):
                 elif fn_id == 3:
                     image = pth_transforms.functional.adjust_hue(image, hue_factor)
 
-        logging.info(type(image))
+        #logging.info(type(image))
 
         should_grayscale = np.random.rand() <= 0.2
         grayscale = 0.0
@@ -77,7 +77,7 @@ class ImgPilPairAugment(ClassyTransform):
             grayscale = 1.0
             image = pth_transforms.RandomGrayscale(p=1.0)(image)
 
-        logging.info(type(image))
+        #logging.info(type(image))
 
         should_blur = np.random.rand() <= self.p_gaussian_blur
         gaussian_radius = 0.0
