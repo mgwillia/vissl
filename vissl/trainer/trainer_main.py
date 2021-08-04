@@ -163,10 +163,6 @@ class SelfSupervisionTrainer(object):
         self.task.prepare(pin_memory=self.cfg.DATA.PIN_MEMORY)
         self.task.init_distributed_data_parallel_model() ## THIS SETS self.task.model
 
-        logging.info(self.task.model.module)
-        logging.info(self.task.model.module.trunk)
-        logging.info(self.task.model.module.heads_)
-
         teacher = get_teacher()
         for param in teacher.parameters():
             param.requires_grad = False
