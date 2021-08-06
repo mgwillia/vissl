@@ -96,7 +96,7 @@ class ImgPilPairAugment(ClassyTransform):
             fn_idx[3] + 1.0, hue_factor,
             grayscale,
             gaussian_radius
-        ])
+        ]).long()
 
         return self.to_tensor(image), transforms
 

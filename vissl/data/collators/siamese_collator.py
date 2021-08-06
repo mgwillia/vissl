@@ -4,6 +4,7 @@
 # LICENSE file in the root directory of this source tree.
 
 import torch
+import logging
 from vissl.data.collators import register_collator
 
 
@@ -46,6 +47,7 @@ def siamese_collator(batch):
     for idx in range(num_data_sources):
         # each image is of shape: num_towers x C x H x W
         # num_towers x C x H x W -> N x num_towers x C x H x W
+        logging.info(data[0][idx])
         idx_data = torch.stack([data[i][idx] for i in range(batch_size)])
         idx_labels = [labels[i][idx] for i in range(batch_size)]
         batch_size, num_siamese_towers, channels, height, width = idx_data.size()
