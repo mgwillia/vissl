@@ -735,12 +735,12 @@ def check_model_compatibilty(config: AttrDict, state_dict: Dict[str, Any]):
         trunk_append_prefix = "trunk.base_model._feature_blocks."
 
     is_compatible = True
-    print(state_dict.keys())
     for layername in state_dict.keys():
         if not (
             layername.startswith(trunk_append_prefix)
             or layername.startswith(heads_append_prefix)
         ):
+            print(layername)
             is_compatible = False
             break
     if not is_compatible:
