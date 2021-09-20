@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=b_moco_f
-#SBATCH --output=outfiles/b_moco_f.out.%j
-#SBATCH --error=outfiles/b_moco_f.out.%j
+#SBATCH --job-name=b_moco
+#SBATCH --output=outfiles/b_moco.out.%j
+#SBATCH --error=outfiles/b_moco.out.%j
 #SBATCH --time=36:00:00
 #SBATCH --qos=high
 #SBATCH --gres=gpu:gtx1080ti:4
