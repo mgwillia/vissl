@@ -7,7 +7,7 @@
 #SBATCH --partition=scavenger
 #SBATCH --account=scavenger
 #SBATCH --gres=gpu:gtx1080ti:8
-#SBATCH --mem=64G
+#SBATCH --mem=128G
 #SBATCH --cpus-per-task=8
 
 module load cuda/10.1.243                                  # run any commands necessary to setup your environment
