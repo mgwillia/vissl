@@ -18,5 +18,5 @@ srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/imagenet/train"] \
                 config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/imagenet/val"] \
-                config.CHECKPOINT.DIR="/cfarhomes/mgwillia/vissl/checkpoints_bench_moco_f" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64
+                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_moco_f" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64
                 config.OPTIMIZER.num_epochs=1'
