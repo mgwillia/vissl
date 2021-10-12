@@ -1,22 +1,21 @@
 #!/bin/bash
 
-#SBATCH --job-name=b_swav_inet                                # sets the job name
-#SBATCH --output=outfiles/b_swav_inet.out.%j                            # indicates a file to redirect STDOUT to; %j is the jobid 
-#SBATCH --error=outfiles/b_swav_inet.out.%j                             # indicates a file to redirect STDERR to; %j is the jobid
-#SBATCH --time=72:00:00                                          # how long you think your job will take to complete; format=hh:mm:ss
-#SBATCH --partition=scavenger
-#SBATCH --account=scavenger
-#SBATCH --gres=gpu:8
+#SBATCH --job-name=b_swav
+#SBATCH --output=outfiles/b_swav.out.%j
+#SBATCH --error=outfiles/b_swav.out.%j
+#SBATCH --time=36:00:00
+#SBATCH --qos=high
+#SBATCH --gres=gpu:gtx1080ti:4
 #SBATCH --mem=128G
 #SBATCH --cpus-per-task=16
 
-module load cuda/10.1.243                                  # run any commands necessary to setup your environment
+module load cuda/10.1.243
 
-srun bash -c 'hostname; CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7 python ./tools/run_distributed_engines.py \
+srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config=benchmark/linear_image_classification/imagenet1k/eval_resnet_8gpu_transfer_in1k_linear \
                 config.MODEL.TRUNK.RESNETS.DEPTH=50 \
-                config.MODEL.WEIGHTS_INIT.PARAMS_FILE=swav_pretrained.torch \
-                config.DISTRIBUTED.NUM_PROC_PER_NODE=8 config.DISTRIBUTED.NUM_NODES=1 \
-                config.DATA.TRAIN.DATA_PATHS=["/fs/vulcan-datasets/imagenet/train"] \
-                config.DATA.TEST.DATA_PATHS=["/fs/vulcan-datasets/imagenet/val"] \
-                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_swav_base" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=32'
+                config.MODEL.WEIGHTS_INIT.PARAMS_FILE=/vulcanscratch/mgwillia/unsupervised-classification/backbones/swav_r50_800.torch \
+                config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
+                config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/imagenet/train"] \
+                config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/imagenet/val"] \
+                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_swav" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
