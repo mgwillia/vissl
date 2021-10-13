@@ -4,7 +4,8 @@
 #SBATCH --output=outfiles/b_sclr.out.%j
 #SBATCH --error=outfiles/b_sclr.out.%j
 #SBATCH --time=36:00:00
-#SBATCH --qos=high
+#SBATCH --account=scavenger
+#SBATCH --partition=scavenger
 #SBATCH --gres=gpu:gtx1080ti:4
 #SBATCH --mem=128G
 #SBATCH --cpus-per-task=16
