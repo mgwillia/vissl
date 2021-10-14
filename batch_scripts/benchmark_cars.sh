@@ -15,7 +15,7 @@ module load cuda/10.1.243
 INDICES=(0 1 2 3 4 5 6)
 BACKBONES=("btwins_r50_1000" "dcv2_r50_800" "moco_r50_800" "simclr_r50_200" "simsiam_r50_100" "supervised_r50" "swav_r50_800")
 CHECKPOINTS_DIRS=("chkpts_b_cars_btwins" "chkpts_b_cars_dc" "chkpts_b_cars_moco" "chkpts_b_cars_sclr" "chkpts_b_cars_simsiam" "chkpts_b_cars_sup" "chkpts_b_cars_swav")
-STATE_DICT_KEY_NAMES=("classy_state_dict" "classy_state_dict" "network" "classy_state_dict" "network" "network" "classy_state_dict")
+STATE_DICT_KEY_NAMES=("classy_state_dict" "network" "network" "classy_state_dict" "network" "network" "classy_state_dict")
 
 if [ ! -d /scratch0/mgwillia/cars_200_2011 ]; then
     srun bash -c "echo 'cars not found on scratch!'"
