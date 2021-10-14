@@ -11,10 +11,10 @@
 
 module load cuda/10.1.243
 
-if [ ! -d /scratch0/mgwillia/imagenet/val ]; then
-    srun bash -c "echo 'imagenet not found on scratch!'"
+if [ ! -d /scratch0/mgwillia/inat_comp_2021/val ]; then
+    srun bash -c "echo 'inat21 not found on scratch!'"
     srun bash -c "mkdir -p /scratch0/mgwillia"
-    srun bash -c "rsync -r /fs/vulcan-datasets/imagenet /scratch0/mgwillia/"
+    srun bash -c "rsync -r /fs/vulcan-datasets/inat_comp_2021 /scratch0/mgwillia/"
 fi
 
 srun bash -c 'hostname; python ./tools/run_distributed_engines.py \

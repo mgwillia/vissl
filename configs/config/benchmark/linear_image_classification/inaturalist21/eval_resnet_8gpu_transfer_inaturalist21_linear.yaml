@@ -1,21 +1,21 @@
 # @package _global_
 config:
   VERBOSE: True
-  LOG_FREQUENCY: 100
+  LOG_FREQUENCY: 200
   TEST_ONLY: False
   TEST_EVERY_NUM_EPOCH: 1
   TEST_MODEL: True
-  SEED_VALUE: 0
+  SEED_VALUE: 1
   MULTI_PROCESSING_METHOD: forkserver
   HOOKS:
     PERF_STATS:
       MONITOR_PERF_STATS: True
   DATA:
-    NUM_DATALOADER_WORKERS: 8
+    NUM_DATALOADER_WORKERS: 16
     TRAIN:
-      DATA_SOURCES: [everstore]
-      LABEL_SOURCES: [disk_filelist]
-      DATASET_NAMES: [inaturalist2018_everstore]
+      DATA_SOURCES: [disk_folder]
+      LABEL_SOURCES: [disk_folder]
+      DATASET_NAMES: [imagenet1k_folder]
       BATCHSIZE_PER_REPLICA: 32
       TRANSFORMS:
         - name: RandomResizedCrop
@@ -27,11 +27,11 @@ config:
           std: [0.229, 0.224, 0.225]
       MMAP_MODE: True
       COPY_TO_LOCAL_DISK: False
-      COPY_DESTINATION_DIR: /tmp/inaturalist2018/
+      COPY_DESTINATION_DIR: /tmp/imagenet1k/
     TEST:
-      DATA_SOURCES: [everstore]
-      LABEL_SOURCES: [disk_filelist]
-      DATASET_NAMES: [inaturalist2018_everstore]
+      DATA_SOURCES: [disk_folder]
+      LABEL_SOURCES: [disk_folder]
+      DATASET_NAMES: [imagenet1k_folder]
       BATCHSIZE_PER_REPLICA: 32
       TRANSFORMS:
         - name: Resize
@@ -44,7 +44,7 @@ config:
           std: [0.229, 0.224, 0.225]
       MMAP_MODE: True
       COPY_TO_LOCAL_DISK: False
-      COPY_DESTINATION_DIR: /tmp/inaturalist2018/
+      COPY_DESTINATION_DIR: /tmp/imagenet1k/
   METERS:
     name: accuracy_list_meter
     accuracy_list_meter:
@@ -92,7 +92,7 @@ config:
       # In the OSS Caffe2 benchmark, RN50 models use 1e-4 and AlexNet models 5e-4
       weight_decay: 0.0005
       momentum: 0.9
-      num_epochs: 84
+      num_epochs: 50
       nesterov: True
       regularize_bn: False
       regularize_bias: True
@@ -102,9 +102,9 @@ config:
             auto_scale: true
             base_value: 0.01
             base_lr_batch_size: 256
-          name: multistep
-          values: [0.01, 0.001, 0.0001, 0.00001]
-          milestones: [24, 48, 72]
+          name: cosine
+          start_value: 0.01
+          end_value: 0.0001
           update_interval: epoch
   DISTRIBUTED:
     BACKEND: nccl
