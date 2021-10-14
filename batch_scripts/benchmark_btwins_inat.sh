@@ -15,6 +15,7 @@ if [ ! -d /scratch0/mgwillia/inat_comp_2021/val ]; then
     srun bash -c "echo 'inat21 not found on scratch!'"
     srun bash -c "mkdir -p /scratch0/mgwillia"
     srun bash -c "./msrsync -p 16 /fs/vulcan-datasets/inat_comp_2021 /scratch0/mgwillia/"
+    srun bash -c "ls /scratch0/mgwillia/inat_comp_2021"
 fi
 
 srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
