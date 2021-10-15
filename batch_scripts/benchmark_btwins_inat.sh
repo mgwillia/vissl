@@ -5,7 +5,7 @@
 #SBATCH --error=outfiles/b_bwtins_inat.out.%j
 #SBATCH --time=36:00:00
 #SBATCH --qos=high
-#SBATCH --gres=gpu:gtx1080ti:4
+#SBATCH --gres=gpu:p6000:4
 #SBATCH --mem=128G
 #SBATCH --cpus-per-task=16
 
