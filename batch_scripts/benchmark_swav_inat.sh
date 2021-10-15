@@ -25,4 +25,4 @@ srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/inat_comp_2021/train"] \
                 config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/inat_comp_2021/val"] \
-                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_swav_inat" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
+                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_swav_inat" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=32'
