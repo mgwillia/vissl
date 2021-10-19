@@ -39,17 +39,20 @@ config:
   MODEL:
     FEATURE_EVAL_SETTINGS:
       EVAL_MODE_ON: True
-      FREEZE_TRUNK_AND_HEAD: True
-      EVAL_TRUNK_AND_HEAD: True
+      #FREEZE_TRUNK_AND_HEAD: True
+      #EVAL_TRUNK_AND_HEAD: True
+      FREEZE_TRUNK_ONLY: True
+      EXTRACT_TRUNK_FEATURES_ONLY: True
+      SHOULD_FLATTEN_FEATS: False
     TRUNK:
       NAME: resnet
       RESNETS:
         DEPTH: 50
-    HEAD:
-      PARAMS: [
-        ["mlp", {"dims": [2048, 2048], "use_relu": True, "skip_last_layer_relu_bn": False}],
-        ["mlp", {"dims": [2048, 128]}],
-      ]
+    #HEAD:
+    #  PARAMS: [
+    #    ["mlp", {"dims": [2048, 2048], "use_relu": True, "skip_last_layer_relu_bn": False}],
+    #    ["mlp", {"dims": [2048, 128]}],
+    #  ]
     WEIGHTS_INIT:
       PARAMS_FILE: "specify the model weights"
       STATE_DICT_KEY_NAME: classy_state_dict

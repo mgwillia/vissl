@@ -24,7 +24,7 @@ CHECKPOINTS_DIRS=("chkpts_knn_btwins" "chkpts_knn_dc" "chkpts_knn_moco" "chkpts_
 STATE_DICT_KEY_NAMES=("classy_state_dict" "network" "network" "classy_state_dict" "network" "network" "classy_state_dict")
 
 for i in ${INDICES[@]}; do
-    srun bash -c "hostname; python ./tools/run_distributed_engines.py \
+    srun bash -c "hostname; python ./tools/nearest_neighbor_test.py \
                     config=benchmark/nearest_neighbor/eval_resnet_8gpu_in1k_kNN copy.yaml \
                     config.MODEL.WEIGHTS_INIT.PARAMS_FILE=/vulcanscratch/mgwillia/unsupervised-classification/backbones/${BACKBONES[$i]}.torch \
                     config.MODEL.WEIGHTS_INIT.STATE_DICT_KEY_NAME=${STATE_DICT_KEY_NAMES[$i]} \
