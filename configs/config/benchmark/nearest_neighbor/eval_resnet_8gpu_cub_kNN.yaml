@@ -57,8 +57,11 @@ config:
       PARAMS_FILE: "specify the model weights"
       STATE_DICT_KEY_NAME: classy_state_dict
   DISTRIBUTED:
+    BACKEND: nccl
     NUM_NODES: 1
     NUM_PROC_PER_NODE: 8
+    INIT_METHOD: tcp
+    RUN_ID: auto
   MACHINE:
     DEVICE: gpu
   CHECKPOINT:
