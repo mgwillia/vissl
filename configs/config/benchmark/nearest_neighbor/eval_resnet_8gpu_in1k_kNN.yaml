@@ -1,5 +1,6 @@
 # @package _global_
 config:
+  SEED_VALUE: 1
   DATA:
     NUM_DATALOADER_WORKERS: 5
     TRAIN:
