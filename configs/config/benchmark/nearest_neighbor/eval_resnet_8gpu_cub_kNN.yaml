@@ -1,8 +1,9 @@
 # @package _global_
 config:
   SEED_VALUE: 1
+  MULTI_PROCESSING_METHOD: forkserver
   DATA:
-    NUM_DATALOADER_WORKERS: 5
+    NUM_DATALOADER_WORKERS: 16
     TRAIN:
       DATA_SOURCES: [disk_folder]
       LABEL_SOURCES: [disk_folder]
