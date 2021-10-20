@@ -12,7 +12,6 @@ import torch
 from hydra.experimental import compose, initialize_config_module
 from torch import nn
 from vissl.config import AttrDict
-from vissl.hooks import default_hook_generator
 from vissl.models.model_helpers import get_trunk_output_feature_names
 from vissl.utils.checkpoint import get_checkpoint_folder
 from vissl.utils.distributed_launcher import launch_distributed
@@ -93,6 +92,14 @@ def nearest_neighbor_test(cfg: AttrDict, layer_name: str = "heads"):
 
 
 def main(args: Namespace, config: AttrDict):
+    ######################################################################################
+    # DO NOT MOVE THIS IMPORT TO TOP LEVEL: submitit processes will not be initialized
+    # correctly (MKL_THREADING_LAYER will be set to INTEL instead of GNU)
+    ######################################################################################
+    from vissl.hooks import default_hook_generator
+
+    ######################################################################################
+
     # setup logging
     setup_logging(__name__)
 

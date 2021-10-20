@@ -12,7 +12,7 @@
 module load cuda/10.1.243
 
 if [ ! -d /scratch0/mgwillia/imagenet/val ]; then
-    srun bash -c "echo 'inat21 not found on scratch!'"
+    srun bash -c "echo 'imagenet not found on scratch!'"
     srun bash -c "mkdir -p /scratch0/mgwillia"
     srun bash -c "./msrsync -P -p 16 /fs/vulcan-datasets/imagenet /scratch0/mgwillia/"
 fi
@@ -24,7 +24,7 @@ STATE_DICT_KEY_NAMES=("classy_state_dict" "network" "network" "classy_state_dict
 
 for i in ${INDICES[@]}; do
     srun bash -c "hostname; python ./tools/nearest_neighbor_test.py \
-                    config=benchmark/nearest_neighbor/eval_resnet_8gpu_in1k_kNN copy.yaml \
+                    config=benchmark/nearest_neighbor/eval_resnet_8gpu_in1k_kNN.yaml \
                     config.MODEL.WEIGHTS_INIT.PARAMS_FILE=/vulcanscratch/mgwillia/unsupervised-classification/backbones/${BACKBONES[$i]}.torch \
                     config.MODEL.WEIGHTS_INIT.STATE_DICT_KEY_NAME=${STATE_DICT_KEY_NAMES[$i]} \
                     config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
