@@ -16,7 +16,7 @@ config:
         LOG_PARAMS: False
         FLUSH_EVERY_N_MIN: 20
   DATA:
-    NUM_DATALOADER_WORKERS: 5
+    NUM_DATALOADER_WORKERS: 8
     TRAIN:
       DATA_SOURCES: [disk_folder]
       DATASET_NAMES: [imagenet1k_folder]
@@ -95,5 +95,5 @@ config:
     DEVICE: gpu
   CHECKPOINT:
     AUTO_RESUME: True
-    CHECKPOINT_FREQUENCY: 5
+    CHECKPOINT_FREQUENCY: 20
     CHECKPOINT_ITER_FREQUENCY: -1  # set this variable to checkpoint every few iterations
