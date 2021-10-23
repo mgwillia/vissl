@@ -70,11 +70,11 @@ config:
         DEPTH: 50
     HEAD:
       PARAMS: [
-        ["eval_mlp", {"in_channels": 64, "dims": [9216, 120]}],
-        ["eval_mlp", {"in_channels": 256, "dims": [9216, 120]}],
-        ["eval_mlp", {"in_channels": 512, "dims": [8192, 120]}],
-        ["eval_mlp", {"in_channels": 1024, "dims": [9216, 120]}],
-        ["eval_mlp", {"in_channels": 2048, "dims": [8192, 120]}],
+        ["eval_mlp", {"in_channels": 64, "dims": [9216, 102]}],
+        ["eval_mlp", {"in_channels": 256, "dims": [9216, 102]}],
+        ["eval_mlp", {"in_channels": 512, "dims": [8192, 102]}],
+        ["eval_mlp", {"in_channels": 1024, "dims": [9216, 102]}],
+        ["eval_mlp", {"in_channels": 2048, "dims": [8192, 102]}],
       ]
     WEIGHTS_INIT:
       PARAMS_FILE: "specify the model weights"
