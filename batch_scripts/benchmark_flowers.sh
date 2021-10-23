@@ -17,6 +17,8 @@ BACKBONES=("btwins_r50_1000" "dcv2_r50_800" "moco_r50_800" "simclr_r50_200" "sim
 CHECKPOINTS_DIRS=("chkpts_b_flowers_btwins" "chkpts_b_flowers_dc" "chkpts_b_flowers_moco" "chkpts_b_flowers_sclr" "chkpts_b_flowers_simsiam" "chkpts_b_flowers_sup" "chkpts_b_flowers_swav")
 STATE_DICT_KEY_NAMES=("classy_state_dict" "network" "network" "classy_state_dict" "network" "network" "classy_state_dict")
 
+srun bash -c "rm -rf /scratch0/mgwillia/OxfordFlowers"
+
 if [ ! -d /scratch0/mgwillia/OxfordFlowers ]; then
     srun bash -c "echo 'flowers not found on scratch!'"
     srun bash -c "mkdir -p /scratch0/mgwillia"
