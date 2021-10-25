@@ -20,7 +20,7 @@ STATE_DICT_KEY_NAMES=("classy_state_dict" "network" "network" "classy_state_dict
 if [ ! -d /scratch0/mgwillia/fgvc-aircraft-2013b ]; then
     srun bash -c "echo 'aircraft not found on scratch!'"
     srun bash -c "mkdir -p /scratch0/mgwillia"
-    srun bash -c "rsync -r /vulcanscratch/mgwillia/fgvc-aircraft-2013b /scratch0/mgwillia/"
+    srun bash -c "./msrsync -p 16 /vulcanscratch/mgwillia/fgvc-aircraft-2013b /scratch0/mgwillia/"
 fi
 
 for i in ${INDICES[@]}; do
