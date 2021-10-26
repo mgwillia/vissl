@@ -11,10 +11,10 @@
 
 module load cuda/10.1.243
 
-INDICES=(0 1 2 3 4 5 6)
-BACKBONES=("btwins_r50_1000" "dcv2_r50_800" "moco_r50_800" "simclr_r50_800" "simsiam_r50_100" "supervised_r50" "swav_r50_800")
-CHECKPOINTS_DIRS=("chkpts_b_nabirds_btwins" "chkpts_b_nabirds_dc" "chkpts_b_nabirds_moco" "chkpts_b_nabirds_sclr" "chkpts_b_nabirds_simsiam" "chkpts_b_nabirds_sup" "chkpts_b_nabirds_swav")
-STATE_DICT_KEY_NAMES=("classy_state_dict" "network" "network" "classy_state_dict" "network" "network" "classy_state_dict")
+INDICES=(0 1 2 3 4 5 6 7 8 9 10)
+BACKBONES=("btwins_r50_1000" "dcv2_r50_800" "moco_r50_800" "simclr_r50_800" "simsiam_r50_100" "supervised_r50" "swav_r50_800" "simclr_r50_100" "simclr_r50_200" "simclr_r50_400" "simclr_r50_1000")
+CHECKPOINTS_DIRS=("chkpts_b_nabirds_btwins" "chkpts_b_nabirds_dc" "chkpts_b_nabirds_moco" "chkpts_b_nabirds_sclr" "chkpts_b_nabirds_simsiam" "chkpts_b_nabirds_sup" "chkpts_b_nabirds_swav" "chkpts_b_nabirds_sclr100" "chkpts_b_nabirds_sclr200" "chkpts_b_nabirds_sclr400" "chkpts_b_nabirds_sclr1000")
+STATE_DICT_KEY_NAMES=("classy_state_dict" "network" "network" "classy_state_dict" "network" "network" "classy_state_dict" "classy_state_dict" "classy_state_dict" "classy_state_dict" "classy_state_dict")
 
 if [ ! -d /scratch0/mgwillia/nabirds ]; then
     srun bash -c "echo 'nabirds not found on scratch!'"
