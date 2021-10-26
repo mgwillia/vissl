@@ -4,8 +4,7 @@
 #SBATCH --output=outfiles/b_flowers.out.%j
 #SBATCH --error=outfiles/b_flowers.out.%j
 #SBATCH --time=36:00:00
-#SBATCH --account=scavenger
-#SBATCH --partition=scavenger
+#SBATCH --qos=high
 #SBATCH --gres=gpu:gtx1080ti:4
 #SBATCH --mem=128G
 #SBATCH --cpus-per-task=16
@@ -13,7 +12,7 @@
 module load cuda/10.1.243
 
 INDICES=(0 1 2 3 4 5 6)
-BACKBONES=("btwins_r50_1000" "dcv2_r50_800" "moco_r50_800" "simclr_r50_200" "simsiam_r50_100" "supervised_r50" "swav_r50_800")
+BACKBONES=("btwins_r50_1000" "dcv2_r50_800" "moco_r50_800" "simclr_r50_800" "simsiam_r50_100" "supervised_r50" "swav_r50_800")
 CHECKPOINTS_DIRS=("chkpts_b_flowers_btwins" "chkpts_b_flowers_dc" "chkpts_b_flowers_moco" "chkpts_b_flowers_sclr" "chkpts_b_flowers_simsiam" "chkpts_b_flowers_sup" "chkpts_b_flowers_swav")
 STATE_DICT_KEY_NAMES=("classy_state_dict" "network" "network" "classy_state_dict" "network" "network" "classy_state_dict")
 
