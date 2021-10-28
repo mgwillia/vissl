@@ -30,20 +30,20 @@ srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
 srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config=benchmark/linear_image_classification/imagenet1k/eval_resnet_8gpu_transfer_in1k_linear \
                 config.MODEL.TRUNK.RESNETS.DEPTH=50 \
-                config.MODEL.WEIGHTS_INIT.PARAMS_FILE=/vulcanscratch/mgwillia/unsupervised-classification/backbones/simclr_r50_400.torch \
-                config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
-                config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/imagenet/train"] \
-                config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/imagenet/val"] \
-                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_sclr400" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
-
-srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
-                config=benchmark/linear_image_classification/imagenet1k/eval_resnet_8gpu_transfer_in1k_linear \
-                config.MODEL.TRUNK.RESNETS.DEPTH=50 \
                 config.MODEL.WEIGHTS_INIT.PARAMS_FILE=/vulcanscratch/mgwillia/unsupervised-classification/backbones/simclr_r50_800.torch \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/imagenet/train"] \
                 config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/imagenet/val"] \
                 config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_sclr" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
+
+srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
+                config=benchmark/linear_image_classification/imagenet1k/eval_resnet_8gpu_transfer_in1k_linear \
+                config.MODEL.TRUNK.RESNETS.DEPTH=50 \
+                config.MODEL.WEIGHTS_INIT.PARAMS_FILE=/vulcanscratch/mgwillia/unsupervised-classification/backbones/simclr_r50_400.torch \
+                config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
+                config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/imagenet/train"] \
+                config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/imagenet/val"] \
+                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_sclr400" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
 
 srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config=benchmark/linear_image_classification/imagenet1k/eval_resnet_8gpu_transfer_in1k_linear \
