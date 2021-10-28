@@ -16,7 +16,7 @@ srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/imagenet/train"] \
                 config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/imagenet/val"] \
-                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_sclr100" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
+                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/chkpts_b_imagenet_sclr100" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
 
 srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config=benchmark/linear_image_classification/imagenet1k/eval_resnet_8gpu_transfer_in1k_linear \
@@ -25,7 +25,7 @@ srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/imagenet/train"] \
                 config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/imagenet/val"] \
-                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_sclr200" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
+                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/chkpts_b_imagenet_sclr200" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
 
 srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config=benchmark/linear_image_classification/imagenet1k/eval_resnet_8gpu_transfer_in1k_linear \
@@ -34,7 +34,7 @@ srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/imagenet/train"] \
                 config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/imagenet/val"] \
-                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_sclr" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
+                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/chkpts_b_imagenet_sclr" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
 
 srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config=benchmark/linear_image_classification/imagenet1k/eval_resnet_8gpu_transfer_in1k_linear \
@@ -43,7 +43,7 @@ srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/imagenet/train"] \
                 config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/imagenet/val"] \
-                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_sclr400" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
+                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/chkpts_b_imagenet_sclr400" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
 
 srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config=benchmark/linear_image_classification/imagenet1k/eval_resnet_8gpu_transfer_in1k_linear \
@@ -52,4 +52,4 @@ srun bash -c 'hostname; python ./tools/run_distributed_engines.py \
                 config.DISTRIBUTED.NUM_PROC_PER_NODE=4 config.DISTRIBUTED.NUM_NODES=1 \
                 config.DATA.TRAIN.DATA_PATHS=["/scratch0/mgwillia/imagenet/train"] \
                 config.DATA.TEST.DATA_PATHS=["/scratch0/mgwillia/imagenet/val"] \
-                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/checkpoints_bench_sclr1000" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
+                config.CHECKPOINT.DIR="/vulcanscratch/mgwillia/vissl/chkpts_b_imagenet_sclr1000" config.DATA.TRAIN.BATCHSIZE_PER_REPLICA=64'
