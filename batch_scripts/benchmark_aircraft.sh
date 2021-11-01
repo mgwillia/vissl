@@ -16,11 +16,10 @@ BACKBONES=("btwins_r50_1000" "dcv2_r50_800" "moco_r50_800" "simclr_r50_800" "sim
 CHECKPOINTS_DIRS=("chkpts_b_aircraft_btwins" "chkpts_b_aircraft_dc" "chkpts_b_aircraft_moco" "chkpts_b_aircraft_sclr" "chkpts_b_aircraft_simsiam" "chkpts_b_aircraft_sup" "chkpts_b_aircraft_swav" "chkpts_b_aircraft_sclr100" "chkpts_b_aircraft_sclr200" "chkpts_b_aircraft_sclr400" "chkpts_b_aircraft_sclr1000")
 STATE_DICT_KEY_NAMES=("classy_state_dict" "network" "network" "classy_state_dict" "network" "network" "classy_state_dict" "classy_state_dict" "classy_state_dict" "classy_state_dict" "classy_state_dict")
 
-if [ ! -d /scratch0/mgwillia/fgvc-aircraft-2013b ]; then
-    srun bash -c "echo 'aircraft not found on scratch!'"
-    srun bash -c "mkdir -p /scratch0/mgwillia"
-    srun bash -c "./msrsync -p 16 /vulcanscratch/mgwillia/fgvc-aircraft-2013b /scratch0/mgwillia/"
-fi
+srun bash -c "echo 'aircraft not found on scratch!'"
+srun bash -c "mkdir -p /scratch0/mgwillia"
+srun bash -c "rm -rf /scratch0/mgwillia/fgvc-aircraft-2013b"
+srun bash -c "./msrsync -p 16 /vulcanscratch/mgwillia/fgvc-aircraft-2013b /scratch0/mgwillia/"
 
 for i in ${INDICES[@]}; do
     srun bash -c "hostname; python ./tools/run_distributed_engines.py \
